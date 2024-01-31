@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_api_call/api/api.dart';
 import 'package:movie_api_call/model/move_model.dart';
@@ -37,16 +38,54 @@ class _HomeState extends State<Home> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
         ],
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Upcoming",
                 style: TextStyle(color: Colors.white),
-              )
+              ),
+              //Carousel
+              FutureBuilder(
+                future: upComingMovies,
+                builder: (context, snapShot) {
+                  if (!snapShot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  final movies = snapShot.data!;
+                  return CarouselSlider.builder(
+                      itemCount: movies.length,
+                      itemBuilder: (context, index, movieIndex) {
+                        final movie = movies[index];
+                        return Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Image.network(
+                              "https://image.tmdb.org/t/p/original/${movie.backDropPath}"),
+                        );
+                      },
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        aspectRatio: 1.4,
+                        autoPlayInterval: const Duration(seconds: 3),
+                      ));
+                },
+              ),
+
+              //Popular movies
+              const Text(
+                "Popular",
+                style: TextStyle(color: Colors.white),
+              ),
+              Container(),
             ],
           ),
         ),

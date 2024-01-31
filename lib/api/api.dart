@@ -15,7 +15,7 @@ class Api {
   Future<List<Movie>> getUpComingMovies() async {
     final response = await http.get(Uri.parse(upComingApiUrl));
     if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body)["result"];
+      final List<dynamic> data = json.decode(response.body)["results"];
       List<Movie> movies = data.map((movie) => Movie.fromMap(movie)).toList();
       return movies;
     } else {
@@ -26,7 +26,7 @@ class Api {
   Future<List<Movie>> getPopularMovies() async {
     final response = await http.get(Uri.parse(popularApiUrl));
     if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body)["result"];
+      final List<dynamic> data = json.decode(response.body)["results"];
       List<Movie> movies = data.map((movie) => Movie.fromMap(movie)).toList();
       return movies;
     } else {
@@ -37,7 +37,7 @@ class Api {
   Future<List<Movie>> getTopRatedMovies() async {
     final response = await http.get(Uri.parse(topRatedApiUrl));
     if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body)["result"];
+      final List<dynamic> data = json.decode(response.body)["results"];
       List<Movie> movies = data.map((movie) => Movie.fromMap(movie)).toList();
       return movies;
     } else {

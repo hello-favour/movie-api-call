@@ -85,7 +85,90 @@ class _HomeState extends State<Home> {
                 "Popular",
                 style: TextStyle(color: Colors.white),
               ),
-              Container(),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 20),
+                height: 200,
+                child: FutureBuilder(
+                  future: popularMovies,
+                  builder: (context, snapShot) {
+                    if (!snapShot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final movies = snapShot.data!;
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: movies.length,
+                      itemBuilder: (context, index) {
+                        final movie = movies[index];
+                        return Container(
+                          width: 150,
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.network(
+                              "https://image.tmdb.org/t/p/original/${movie.backDropPath}",
+                              height: 120,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+
+              //TopRated movies
+              const Text(
+                "Top Rated",
+                style: TextStyle(color: Colors.white),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 20),
+                height: 200,
+                child: FutureBuilder(
+                  future: topRatedMovies,
+                  builder: (context, snapShot) {
+                    if (!snapShot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final movies = snapShot.data!;
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: movies.length,
+                      itemBuilder: (context, index) {
+                        final movie = movies[index];
+                        return Container(
+                          width: 150,
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.network(
+                              "https://image.tmdb.org/t/p/original/${movie.backDropPath}",
+                              height: 120,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
